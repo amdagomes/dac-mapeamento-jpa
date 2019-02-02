@@ -5,75 +5,91 @@
  */
 package com.jpa.cenario.tres;
 
-
-import com.jpa.cenario.tres.LocalDateEmDate;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Date;
+
 import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Convert;
-import javax.persistence.EmbeddedId;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Lob;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
  * @author Cliente
  */
 @Entity
+@IdClass(MaterialDidaticoPK.class)
+
 public class MaterialDidatico implements Serializable {
 
-   @EmbeddedId
-    private  MaterialDidaticoPK chave;
-   @Column(length = 155, nullable = false)
+    @Id
+    @GenericGenerator(name = "increment", strategy = "increment")
+    @GeneratedValue(generator = "increment")
+    private long codigo;
+    @Id
+    @Column(length = 45, nullable = false)
+    private String origem;
+    @Column(length = 155, nullable = false)
     private String titulo;
-   @Lob
-   @Basic(fetch = FetchType.LAZY)
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
     private String descricao;
     @Column(length = 55)
     private String autor;
-     @Column(scale=6,precision=12)
+    @Column(name = "tamanho", columnDefinition = "Decimal(6,2)")
     private double tamanho;
     private boolean publico;
-    @Convert(converter = LocalDateEmDate.class)
     @Column(nullable = false)
-    private LocalDate dataCadastro;
-   
-   
+    @Temporal(TemporalType.DATE)
+    private Date dataCadastro;
+
     @Enumerated(EnumType.STRING)
-    
+
     private TipoMaterialDidatico tipo;
 
     public MaterialDidatico() {
     }
 
-    public MaterialDidatico(String origem, long codigo,String titulo, String descricao, String autor, double tamanho, boolean publico, LocalDate dataCadastro, TipoMaterialDidatico tipo) {
-        
+    public MaterialDidatico(String origem, String titulo, String descricao,
+            String autor, double tamanho, boolean publico, TipoMaterialDidatico tipo) {
+
         this.titulo = titulo;
         this.descricao = descricao;
         this.autor = autor;
         this.tamanho = tamanho;
         this.publico = publico;
-        this.dataCadastro = dataCadastro;
+        this.dataCadastro = new Date();
         this.tipo = tipo;
-        this.chave = new  MaterialDidaticoPK (origem,codigo);
+        this.origem = origem;
     }
 
-   
-       
-    
-   
-    public MaterialDidaticoPK getChave() {
-        return chave;
+    public long getCodigo() {
+        return codigo;
     }
 
-    public void setChave(MaterialDidaticoPK chave) {
-        this.chave = chave;
+    public void setCodigo(long codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getOrigem() {
+        return origem;
+    }
+
+    public void setOrigem(String origem) {
+        this.origem = origem;
     }
 
     public String getTitulo() {
@@ -116,11 +132,11 @@ public class MaterialDidatico implements Serializable {
         this.publico = publico;
     }
 
-    public LocalDate getDataCadastro() {
+    public Date getDataCadastro() {
         return dataCadastro;
     }
 
-    public void setDataCadastro(LocalDate dataCadastro) {
+    public void setDataCadastro(Date dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
 
@@ -134,15 +150,16 @@ public class MaterialDidatico implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + Objects.hashCode(this.chave);
-        hash = 97 * hash + Objects.hashCode(this.titulo);
-        hash = 97 * hash + Objects.hashCode(this.descricao);
-        hash = 97 * hash + Objects.hashCode(this.autor);
-        hash = 97 * hash + (int) (Double.doubleToLongBits(this.tamanho) ^ (Double.doubleToLongBits(this.tamanho) >>> 32));
-        hash = 97 * hash + (this.publico ? 1 : 0);
-        hash = 97 * hash + Objects.hashCode(this.dataCadastro);
-        hash = 97 * hash + Objects.hashCode(this.tipo);
+        int hash = 5;
+        hash = 29 * hash + (int) (this.codigo ^ (this.codigo >>> 32));
+        hash = 29 * hash + Objects.hashCode(this.origem);
+        hash = 29 * hash + Objects.hashCode(this.titulo);
+        hash = 29 * hash + Objects.hashCode(this.descricao);
+        hash = 29 * hash + Objects.hashCode(this.autor);
+        hash = 29 * hash + (int) (Double.doubleToLongBits(this.tamanho) ^ (Double.doubleToLongBits(this.tamanho) >>> 32));
+        hash = 29 * hash + (this.publico ? 1 : 0);
+        hash = 29 * hash + Objects.hashCode(this.dataCadastro);
+        hash = 29 * hash + Objects.hashCode(this.tipo);
         return hash;
     }
 
@@ -158,10 +175,16 @@ public class MaterialDidatico implements Serializable {
             return false;
         }
         final MaterialDidatico other = (MaterialDidatico) obj;
+        if (this.codigo != other.codigo) {
+            return false;
+        }
         if (Double.doubleToLongBits(this.tamanho) != Double.doubleToLongBits(other.tamanho)) {
             return false;
         }
         if (this.publico != other.publico) {
+            return false;
+        }
+        if (!Objects.equals(this.origem, other.origem)) {
             return false;
         }
         if (!Objects.equals(this.titulo, other.titulo)) {
@@ -173,9 +196,6 @@ public class MaterialDidatico implements Serializable {
         if (!Objects.equals(this.autor, other.autor)) {
             return false;
         }
-        if (!Objects.equals(this.chave, other.chave)) {
-            return false;
-        }
         if (!Objects.equals(this.dataCadastro, other.dataCadastro)) {
             return false;
         }
@@ -185,11 +205,4 @@ public class MaterialDidatico implements Serializable {
         return true;
     }
 
-  
-    }
-
-  
-
-  
-
-
+}

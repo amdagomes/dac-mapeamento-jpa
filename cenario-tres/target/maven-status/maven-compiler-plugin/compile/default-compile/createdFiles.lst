@@ -1,0 +1,5 @@
+com\jpa\cenario\tres\MaterialDidatico.class
+com\jpa\cenario\tres\MaterialDidaticoPK.class
+com\jpa\main\NewMain.class
+com\jpa\cenario\tres\MaterialDidaticoDao.class
+com\jpa\cenario\tres\TipoMaterialDidatico.class

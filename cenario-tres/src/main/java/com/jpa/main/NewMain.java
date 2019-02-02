@@ -5,10 +5,11 @@
  */
 package com.jpa.main;
 
-
 import com.jpa.cenario.tres.TipoMaterialDidatico;
 import com.jpa.cenario.tres.MaterialDidaticoDao;
 import com.jpa.cenario.tres.MaterialDidatico;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 
 /**
@@ -17,20 +18,20 @@ import java.time.LocalDate;
  */
 public class NewMain {
 
-    
     public static void main(String[] args) throws Exception {
-     
-        MaterialDidaticoDao dao = new   MaterialDidaticoDao();
-       
-   
-         MaterialDidatico mat = new MaterialDidatico("origem",100,"titulo","descricao","autor",100,
-                 true,LocalDate.now(),TipoMaterialDidatico.APRESENTACAO);
-          MaterialDidatico mat2 = new MaterialDidatico("origem",111,"titulo","descricao","autor",100,true,LocalDate.now(),TipoMaterialDidatico.APRESENTACAO);
-         dao.salvar(mat);
-         dao.salvar(mat2);
-             
-      
+
+        MaterialDidaticoDao dao = new MaterialDidaticoDao();
+
+ 
+        MaterialDidatico mat;
+        mat = new MaterialDidatico("origem", "titulo", "descricao", "autor", 100,
+                true ,TipoMaterialDidatico.APRESENTACAO);
+        MaterialDidatico mat2 = new MaterialDidatico("origem2", "titulo2", "descricao", "autor2", 100,
+                true,TipoMaterialDidatico.VIDEOAULA);
         
+        dao.salvar(mat);
+        dao.salvar(mat2);
+
     }
-    
+
 }

@@ -1,40 +1,36 @@
 package com.jpa.cenario.tres;
 
-
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.SequenceGenerator;
+import org.hibernate.annotations.GenericGenerator;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Cliente
  */
+public class MaterialDidaticoPK implements Serializable {
 
-@Embeddable
-
-
-public class MaterialDidaticoPK implements Serializable  {
-    @Column(length = 45, nullable = false)
     private String origem;
- 
+
     private long codigo;
 
     public MaterialDidaticoPK() {
     }
 
-    public MaterialDidaticoPK(String origem,long codigo) {
+    public MaterialDidaticoPK(long codigo, String origem) {
+        this.codigo = codigo;
         this.origem = origem;
-        this.codigo=codigo;
-       
+
     }
 
     public String getOrigem() {
@@ -55,9 +51,9 @@ public class MaterialDidaticoPK implements Serializable  {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + (this.origem != null ? this.origem.hashCode() : 0);
-        hash = 37 * hash + (int) (this.codigo ^ (this.codigo >>> 32));
+        int hash = 5;
+        hash = 67 * hash + Objects.hashCode(this.origem);
+        hash = 67 * hash + (int) (this.codigo ^ (this.codigo >>> 32));
         return hash;
     }
 
@@ -76,14 +72,10 @@ public class MaterialDidaticoPK implements Serializable  {
         if (this.codigo != other.codigo) {
             return false;
         }
-        if ((this.origem == null) ? (other.origem != null) : !this.origem.equals(other.origem)) {
+        if (!Objects.equals(this.origem, other.origem)) {
             return false;
         }
         return true;
     }
-    
-    
-    
-    
-    
+
 }

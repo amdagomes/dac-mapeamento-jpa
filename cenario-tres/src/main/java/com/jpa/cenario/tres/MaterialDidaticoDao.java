@@ -36,13 +36,11 @@ public class MaterialDidaticoDao {
     }
 
     public void Atualizar(MaterialDidatico mt) {
-        
-            EntityTransaction transaction = em.getTransaction();
-            transaction.begin();
-            em.merge(mt);
-            transaction.commit();
-        }
 
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+        em.merge(mt);
+        transaction.commit();
     }
 
-
+}
