@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="cenarioDois">
+  <ClassDiagramComponents>
+    <Class name="Oficina" package="" visibility="public" xPosition="184.0" yPosition="184.0">
+      <Fields>
+        <Field name="rua" type="String" visibility="private"/>
+        <Field name="bairro" type="String" visibility="private"/>
+        <Field name="cidade" type="String" visibility="private"/>
+        <Field name="saldo" type="Double" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="Funcionario" package="" visibility="public" xPosition="547.0" yPosition="184.0">
+      <Fields>
+        <Field name="nome" type="String" visibility="private"/>
+        <Field name="cpf" type="String" visibility="private"/>
+        <Field name="rg" type="String" visibility="private"/>
+        <Field name="salario" type="Double" visibility="private"/>
+        <Field name="funcao" type="Funcao" visibility="private"/>
+        <Field name="oficina" type="Oficina" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="Concerto" package="" visibility="public" xPosition="342.0" yPosition="438.0">
+      <Fields>
+        <Field name="valor" type="Double" visibility="private"/>
+        <Field name="dataConcerto" type="Date" visibility="private"/>
+        <Field name="funcionario" type="Funcionario" visibility="private"/>
+        <Field name="oficina" type="Oficina" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Enum name="Funcao" package="" visibility="public" xPosition="840.0" yPosition="227.0">
+      <Literals>
+        <Literal name="EMPREGADO"/>
+        <Literal name="GERENTE"/>
+      </Literals>
+    </Enum>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="possui" source="Oficina" target="Funcionario" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="feito" source="Concerto" target="Oficina" type="Default" sourceCardinality="0..1" targetCardinality="1..*" collectionType="List"/>
+    <HasRelation name="funcao" source="Funcionario" target="Funcao" type="Composition" sourceCardinality="0..1" targetCardinality="1..1"/>
+    <HasRelation name="realizado" source="Concerto" target="Funcionario" type="Default" sourceCardinality="0..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
