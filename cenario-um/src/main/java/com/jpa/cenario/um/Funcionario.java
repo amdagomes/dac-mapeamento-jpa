@@ -5,9 +5,15 @@
  */
 package com.jpa.cenario.um;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -15,19 +21,26 @@ import javax.persistence.Id;
  */
 
 @Entity
-public class Funcionario {
+public class Funcionario implements Serializable{
+    
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String nome;
     private String cpf;
     private float salario;
-     private List<Projeto> projetos;
+    
+    @OneToMany(mappedBy = "projeto", targetEntity = TrabalhaProjeto.class)
+    @Basic
+    private List<Projeto> projetos;
 
-    public Funcionario(String nome, String cpf, float salario, List<Projeto> projetos) {
+    public Funcionario(String nome, String cpf, float salario) {
         this.nome = nome;
         this.cpf = cpf;
         this.salario = salario;
-        this.projetos = projetos;
+    }
+
+    public Funcionario() {
     }
 
     public String getNome() {
@@ -61,9 +74,46 @@ public class Funcionario {
     public void setProjetos(List<Projeto> projetos) {
         this.projetos = projetos;
     }
-     
-     
-     
-     
-     
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 83 * hash + this.id;
+        hash = 83 * hash + Objects.hashCode(this.nome);
+        hash = 83 * hash + Objects.hashCode(this.cpf);
+        hash = 83 * hash + Float.floatToIntBits(this.salario);
+        hash = 83 * hash + Objects.hashCode(this.projetos);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Funcionario other = (Funcionario) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (Float.floatToIntBits(this.salario) != Float.floatToIntBits(other.salario)) {
+            return false;
+        }
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        if (!Objects.equals(this.cpf, other.cpf)) {
+            return false;
+        }
+        if (!Objects.equals(this.projetos, other.projetos)) {
+            return false;
+        }
+        return true;
+    }
+          
 }

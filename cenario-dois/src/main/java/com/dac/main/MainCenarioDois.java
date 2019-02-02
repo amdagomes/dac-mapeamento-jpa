@@ -15,9 +15,10 @@ public class MainCenarioDois {
         Oficina ofcina = new Oficina("rua", "bairro", "cidade", 0);
         Funcionario funcionario = new Funcionario("Mick", "111.111.111-11", 
                                                    "123412", 1000, Funcao.EMPREGADO, ofcina);
-        Funcionario funcionario2 = new Funcionario("Job", "111.111.111-11", 
+        Funcionario funcionario2 = new Funcionario("Ju", "111.111.111-11", 
                                                    "123412", 1000, Funcao.EMPREGADO, ofcina);
         Concerto concerto = new Concerto(30, funcionario, ofcina);
+        
         ConcertoDAO.salvarOficina(ofcina);
         ConcertoDAO.salvarFuncionario(funcionario);
         ConcertoDAO.salvarFuncionario(funcionario2);

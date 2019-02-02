@@ -10,7 +10,9 @@
     <name>dac-mapeamento-jpa</name>
     
     <modules>
+        <module>cenario-um</module>
         <module>cenario-dois</module>
+        <module>cenario-tres</module>
     </modules>
 
     <properties>

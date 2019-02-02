@@ -1,15 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.jpa.cenario.um;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -17,13 +17,28 @@ import javax.persistence.Id;
  */
 @Entity
 public class Projeto implements Serializable {
+    
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String descricao;
     private String area;
     private LocalDate dataInicio;
     private LocalDate dataConclusao;
+    
+    @OneToMany(mappedBy = "funcionario", targetEntity = TrabalhaProjeto.class)
+    @Basic
+    private List<Funcionario> funcionarios;
 
+    public Projeto(String area, LocalDate dataInicio, LocalDate dataConclusao) {
+        this.area = area;
+        this.dataInicio = dataInicio;
+        this.dataConclusao = dataConclusao;
+    }
+
+    public Projeto() {
+    }
+   
     public String getDescricao() {
         return descricao;
     }
@@ -56,13 +71,23 @@ public class Projeto implements Serializable {
         this.dataConclusao = dataConclusao;
     }
 
+    public List<Funcionario> getFuncionarios() {
+        return funcionarios;
+    }
+
+    public void setFuncionarios(List<Funcionario> funcionarios) {
+        this.funcionarios = funcionarios;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.descricao);
-        hash = 97 * hash + Objects.hashCode(this.area);
-        hash = 97 * hash + Objects.hashCode(this.dataInicio);
-        hash = 97 * hash + Objects.hashCode(this.dataConclusao);
+        hash = 59 * hash + this.id;
+        hash = 59 * hash + Objects.hashCode(this.descricao);
+        hash = 59 * hash + Objects.hashCode(this.area);
+        hash = 59 * hash + Objects.hashCode(this.dataInicio);
+        hash = 59 * hash + Objects.hashCode(this.dataConclusao);
+        hash = 59 * hash + Objects.hashCode(this.funcionarios);
         return hash;
     }
 
@@ -78,6 +103,9 @@ public class Projeto implements Serializable {
             return false;
         }
         final Projeto other = (Projeto) obj;
+        if (this.id != other.id) {
+            return false;
+        }
         if (!Objects.equals(this.descricao, other.descricao)) {
             return false;
         }
@@ -90,7 +118,10 @@ public class Projeto implements Serializable {
         if (!Objects.equals(this.dataConclusao, other.dataConclusao)) {
             return false;
         }
+        if (!Objects.equals(this.funcionarios, other.funcionarios)) {
+            return false;
+        }
         return true;
     }
-
+    
 }
