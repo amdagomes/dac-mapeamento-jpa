@@ -5,18 +5,24 @@
  */
 package com.jpa.cenario.um;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  *
  * @author Cliente
  */
-public class Projeto {
+@Entity
+public class Projeto implements Serializable {
+    @Id
+    private int id;
     private String descricao;
     private String area;
-   private LocalDate dataInicio;
-   private LocalDate dataConclusao;
+    private LocalDate dataInicio;
+    private LocalDate dataConclusao;
 
     public String getDescricao() {
         return descricao;
@@ -86,9 +92,5 @@ public class Projeto {
         }
         return true;
     }
-   
-   
-   
-   
-   
+
 }
